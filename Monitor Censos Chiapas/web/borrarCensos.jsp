@@ -78,6 +78,7 @@
                                 <td>Estado</td>
                                 <td>Tipo</td>
                                 <td>Borrar</td>
+                                <td>Prueba</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -87,7 +88,11 @@
                                     con.conectar();
                                     ResultSet rset = con.consulta("select * from tb_a ");
                                     while (rset.next()) {
-                                   
+                                        int banpr = 0;
+                                        ResultSet rsetprueba = con.consulta("select * from tb_prueba where id_uni = '" + rset.getString(1) + "' ");
+                                        while (rsetprueba.next()) {
+                                            banpr = 1;
+                                        }
                             %>
                             <tr class="odd gradeX">
                                 <td><%=rset.getString(1)%></td>
@@ -98,6 +103,16 @@
                                 <td><%=rset.getString(13)%></td>
                                 <td><%=rset.getString(16)%></td>
                                 <td><form action="EliminaCenso" method="Post"><button value="<%=rset.getString(1)%>" name="accion" class="btn btn-danger btn-block" onclick="return confirm('Seguro que desea eliminar el censo?');"><span class="glyphicon glyphicon-remove"></span></button></form></td>
+                                <td>
+                                    <%
+                                        if (banpr == 1) {
+                                    %>
+                                    <form action="EliminaPrueba" method="Post"><button value="<%=rset.getString(1)%>" name="accion" class="btn btn-warning btn-block" onclick="return confirm('Seguro que desea quitar el atributo de \'Prueba\'?');"><span class="glyphicon glyphicon-remove"></span></button></form>
+                                            <%
+                                                }
+                                            %>
+
+                                </td>
                             </tr>
                             <%
                                     }
@@ -123,8 +138,8 @@
     <script src="js/jquery.dataTables.js"></script>
     <script src="js/dataTables.bootstrap.js"></script>
     <script>
-                                $(document).ready(function() {
-                                    $('#datosProv').dataTable();
-                                });
+                                        $(document).ready(function() {
+                                            $('#datosProv').dataTable();
+                                        });
     </script>
 </html>

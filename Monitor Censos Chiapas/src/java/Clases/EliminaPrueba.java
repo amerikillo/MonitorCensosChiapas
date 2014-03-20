@@ -5,19 +5,19 @@
  */
 package Clases;
 
+import conn.ConectionDB;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import conn.ConectionDB;
 
 /**
  *
  * @author Americo
  */
-public class EliminaCenso extends HttpServlet {
+public class EliminaPrueba extends HttpServlet {
 
     ConectionDB con = new ConectionDB();
 
@@ -38,21 +38,17 @@ public class EliminaCenso extends HttpServlet {
             String id_uni = request.getParameter("accion");
             con.conectar();
             try {
-                con.borrar2("delete from tb_a where id_uni = '" + id_uni + "'");
-                con.borrar2("delete from tb_b where id_uni = '" + id_uni + "'");
-                con.borrar2("delete from tb_c where id_uni = '" + id_uni + "'");
-                con.borrar2("delete from tb_d where id_uni = '" + id_uni + "'");
-                con.borrar2("delete from tb_e where id_uni = '" + id_uni + "'");
-                con.borrar2("delete from tb_f where id_uni = '" + id_uni + "'");
                 con.borrar2("delete from tb_prueba where id_uni = '" + id_uni + "'");
             } catch (Exception e) {
-                out.println("<script>alert('No se pudo borrar la unidad, reintente')</script>");
+                System.out.println(e.getMessage());
+                out.println("<script>alert('No se pudo borrar el atributo, reintente')</script>");
                 out.println("<script>window.location='borrarCensos.jsp'</script>");
             }
-            out.println("<script>alert('Datos borrados exitosamente')</script>");
+            out.println("<script>alert('Atributo borrado exitosamente')</script>");
             out.println("<script>window.location='borrarCensos.jsp'</script>");
             con.cierraConexion();
         } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 

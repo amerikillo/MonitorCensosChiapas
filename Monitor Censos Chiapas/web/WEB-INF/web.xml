@@ -4,9 +4,17 @@
         <servlet-name>EliminaCenso</servlet-name>
         <servlet-class>Clases.EliminaCenso</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EliminaPrueba</servlet-name>
+        <servlet-class>Clases.EliminaPrueba</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EliminaCenso</servlet-name>
         <url-pattern>/EliminaCenso</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EliminaPrueba</servlet-name>
+        <url-pattern>/EliminaPrueba</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
