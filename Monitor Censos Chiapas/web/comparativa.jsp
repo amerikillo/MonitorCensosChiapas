@@ -49,10 +49,10 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Receta Electronica <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="receta/receta_farmacia.jsp">Captura de Receta</a></li>
-                            <!--li class="divider"></li>
-                            <li><a href="#rf">Reimpresión de Comprobantes</a></li>
-                        </ul>
-                    </li-->
+                    <!--li class="divider"></li>
+                    <li><a href="#rf">Reimpresión de Comprobantes</a></li>
+                </ul>
+            </li-->
 
                     <li>
                         <a href="index.jsp">Registro de Entradas</a>
@@ -68,36 +68,57 @@
         </div>
         <div class="container-fluid">
             <div class="container">
-                <h1>Entradas Censos Chiapas</h1>
+                <h1>Comparativa Censos Chiapas</h1>
                 <div class="panel panel-body">
                     <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="datosProv">
                         <thead>
                             <tr>
                                 <td>id</td>
                                 <td>Nombre</td>
-                                <td>Fecha</td>
-                                <td>Hora</td>
-                                <td>Status</td>
+                                <td>Municipio</td>
+                                <td>Cluess</td>
+                                <td>Juris</td>
+                                <td>Tipo</td>
+                                <td>Censo</td>
+                                <td>Fotos</td>
+                                <td>Inventario</td>
                             </tr>
                         </thead>
                         <tbody>
                             <%
                                 try {
-                                    Calendar calendar = Calendar.getInstance();
-                                    con.conectar();
-                                    ResultSet rset = con.consulta("select * from entradas order by (id+0) desc");
-                                    while (rset.next()) {
-                                        calendar.setTime(df.parse(rset.getString(4)));
-                                        calendar.add(Calendar.HOUR, 6);
-                                        Date hora = calendar.getTime();
 
+                                    con.conectar();
+                                    ResultSet rset = con.consulta("select id_uni, campo_1, campo_5, campo_7, campo_11, campo_15 from tb_a order by id_uni+0");
+                                    while (rset.next()) {
+
+                                        String ima = "", inv = "", cen = "", tot_img="";
+                                        ResultSet rset2 = con.consulta("select id_uni from tb_imagenes where id_uni = '" + rset.getString(1) + "'");
+                                        while (rset2.next()) {
+                                            ima = "X";
+                                        }
+
+                                        rset2 = con.consulta("select id_uni from tb_a where id_uni = '" + rset.getString(1) + "' and campo_31 != '' and campo_30!= '' ");
+                                        while (rset2.next()) {
+                                            cen = "X";
+                                        }
+
+                                        rset2 = con.consulta("select count(id_uni) from tb_imagenes where id_uni = '" + rset.getString(1) + "'");
+                                        while (rset2.next()) {
+                                            inv = "X";
+                                            tot_img=rset2.getString(1);
+                                        }
                             %>
                             <tr class="odd gradeX">
-                                <td><%=rset.getInt(1)%></td>
+                                <td><%=rset.getString(1)%></td>
                                 <td><%=rset.getString(2)%></td>
-                                <td><%=df3.format(df2.parse(rset.getString(3)))%></td>
-                                <td><%=df.format(hora)%></td>
+                                <td><%=rset.getString(3)%></td>
+                                <td><%=rset.getString(4)%></td>
                                 <td><%=rset.getString(5)%></td>
+                                <td><%=rset.getString(6)%></td>
+                                <td><%=cen%></td>
+                                <td><%=ima%> - <%=tot_img%></td>
+                                <td><%=inv%></td>
                             </tr>
                             <%
                                     }

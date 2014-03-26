@@ -60,6 +60,9 @@
                     <li>
                         <a href="borrarCensos.jsp">Baja de Censos</a>
                     </li>
+                    <li>
+                        <a href="comparativa.jsp">Comparativa</a>
+                    </li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>
